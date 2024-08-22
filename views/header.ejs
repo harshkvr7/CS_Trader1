@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CsTrader</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+
+<body>
+    <header>
+        <div class="hl">
+            <div class="header-home-icon">
+                <a href="/">
+                    <img style="width: 45px;" src="/images/cs_icon.png">
+                </a>
+            </div>
+
+            <div class="header-buy hl-item">
+                <a href="/">Buy</a>
+            </div>
+            <div class="header-sell hl-item">
+                <a href="/sell">Sell</a>
+            </div>
+        </div>
+        <div class="hr Roboto-light">
+            <a href="/addbalance">
+                <div class="user-balance">
+                    <h2>₹ <%= userData.balance / 100 %>
+                    </h2>
+                </div>
+            </a>
+            <div class="profile-img">
+                <img style="width: 45px;" src=<%= userData.pfp %>>
+            </div>
+        </div>
+    </header>
+</body>
+
+</html>

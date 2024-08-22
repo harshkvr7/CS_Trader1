@@ -1,0 +1,130 @@
+<%- include("header.ejs") %>
+<div class="market-container">
+    <div class="market-left">
+        <div class="market-filters">
+            <div class="market-filter-price"></div>
+        </div>
+    </div>
+
+    <% function findImageURLByName(skinName) {
+        for (const key in skinimg) {
+            if (skinimg.hasOwnProperty(key)) {
+                const skin = skinimg[key];
+                
+                if (skin.name === skinName) {
+                    return skin.image; 
+                }
+            }
+        }
+
+        return null; 
+    } %>
+
+    <% function foundStickers(item) {
+        // stringnick.pro
+        const stickers = [];
+        let stickerString = null;
+        if (item && item.descriptions) {
+            for (let k = 0; k < item.descriptions.length; k++) {
+                if (item.descriptions[k].value.includes('sticker')) {
+                    stickerString = item.descriptions[k].value;
+                    break;
+                }
+            }
+        }
+        if (stickerString) {
+            const regex = /<img width=64 height=48 src="(.*?)">/g;
+            let m;
+     
+            while ((m = regex.exec(stickerString)) !== null) {
+                if (m.index === regex.lastIndex) {
+                    regex.lastIndex++;
+                }
+     
+     
+                m.forEach((match, groupIndex) => {
+                    if (groupIndex === 1) {
+                        stickers.push(match);
+                    }
+                });
+            }
+        }
+        return stickers;
+    } %>
+
+    <div class="market-right">
+        <div class="market-sort">
+            <div class="market-sort-label"> 
+                <h3>Sort by</h3> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M6 9l6 6l6 -6" />
+                </svg>
+            </div>
+            <div class="dropdown-content">
+                <a href="/" id="defaultSort">Default</a>
+                <a href="/?sortCriteria=priceAsc" id="priceAscSort">Price(Low to High)</a>
+                <a href="/?sortCriteria=priceDesc" id="priceDescSort">Price(High to Low)</a>
+            </div>
+        </div>
+
+        <div class="skin-container" id="style-4">
+            <% for (let no=0; no < myskins.length; no++) {%>
+                <% let stickers = foundStickers(myskins[no]) %>
+                <% if (myskins[no]) { %>
+                <div class="skin-card">
+                        <div class="name-container">
+                            <div class="gun-name">
+                                <%= myskins[no].name %>
+                            </div>
+                            <% if(myskins[no].tags[5] &&  myskins[no].tags[5].name){%>
+                            <div class="gun-exterior">
+                                <%= myskins[no].tags[5].name %>
+                            </div>
+                            <% } %>
+                            
+                        </div>
+                        <% var skinurl = findImageURLByName(myskins[no].market_hash_name) %>
+                        <div class="skin-img-container">
+                            <img src=<%= skinurl %>>
+
+                            <div class="stickers-container">
+                                <% for(let st = 0; st < stickers.length; st++){ %>
+                                    <img src=<%= stickers[st] %>>
+                                <% } %>
+                            </div>
+                        </div>
+    
+                        <div class="details-container">
+                            <div class="details-upper">
+                                <div class="item-price">
+                                    ₹ <%= ((skinprices[myskins[no].market_hash_name].steam.last_24h) * 91).toFixed(2) %>                                
+                                </div>
+
+                                <a class="buy-item-a" href="/withdraw?assetid=<%= myskins[no].assetid %>">
+                                    <div class="buy-item">
+                                        Buy Now
+                                    </div>
+                                </a>
+                            </div>
+                            <% if(locals.myskins[no].market_actions){ %>
+                                <div class="inspect-item" style="text-decoration: underline;">
+                                    <% var inspectUrl = myskins[no].market_actions[0].link.replace("M%listingid%", 'S76561199078331166').replace("%assetid%", myskins[no].assetid) %>
+                                    <a href=<%= inspectUrl %>>
+                                        Inspect ↗
+                                    </a>                                
+                                </div>
+                            <% } %>
+                        </div>
+                        
+                </div>
+                <% } %>
+    
+                <%} %>
+        </div>
+    </div>
+</div>
+
+    
+
+    
