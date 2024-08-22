@@ -75,10 +75,10 @@ This project is a web application that integrates with the Steam API to manage a
     SESSION_SECRET=your_session_secret
 
 4. **Database Setup:**
-    -s_id: User's Steam ID (TEXT), used as the primary key.
-    -name: User's display name (TEXT), cannot be null.
-    -pfp: User's profile picture URL (TEXT), cannot be null.
-    -balance: User's account balance (INT8), with a default value of 0.
+    - **s_id**: User's Steam ID (TEXT), used as the primary key.
+    - **name**: User's display name (TEXT), cannot be null.
+    - **pfp**: User's profile picture URL (TEXT), cannot be null.
+    - **balance**: User's account balance (INT8), with a default value of 0.
 
     ```sql
     CREATE TABLE users (
