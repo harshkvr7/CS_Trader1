@@ -75,6 +75,10 @@ This project is a web application that integrates with the Steam API to manage a
     SESSION_SECRET=your_session_secret
 
 4. **Database Setup:**
+    -s_id: User's Steam ID (TEXT), used as the primary key.
+    -name: User's display name (TEXT), cannot be null.
+    -pfp: User's profile picture URL (TEXT), cannot be null.
+    -balance: User's account balance (INT8), with a default value of 0.
 
     ```sql
     CREATE TABLE users (
@@ -84,10 +88,6 @@ This project is a web application that integrates with the Steam API to manage a
     balance INT8 DEFAULT 0
     );
 
-s_id: User's Steam ID (TEXT), used as the primary key.
-name: User's display name (TEXT), cannot be null.
-pfp: User's profile picture URL (TEXT), cannot be null.
-balance: User's account balance (INT8), with a default value of 0.
 
 5. **Run the application**
 
@@ -96,10 +96,10 @@ balance: User's account balance (INT8), with a default value of 0.
 
 ## Usage
 
-**Login:** Navigate to /login to authenticate with Steam.
-**View Inventory:** Access the home page to view and manage your inventory.
-**Withdraw Items:** Use /withdraw?assetid=ITEM_ID to withdraw an item.
-**Deposit Items:** Use /deposit?assetid=ITEM_ID to deposit an item.
-**Add Balance:** Go to /addbalance to add funds to your account.
-**Checkout:** Visit /checkout?amount=AMOUNT to initiate a payment.
+-    **Login:** Navigate to /login to authenticate with Steam.
+-    **View Inventory:** Access the home page to view and manage your inventory.
+-    **Withdraw Items:** Use /withdraw?assetid=ITEM_ID to withdraw an item.
+-    **Deposit Items:** Use /deposit?assetid=ITEM_ID to deposit an item.
+-    **Add Balance:** Go to /addbalance to add funds to your account.
+-    **Checkout:** Visit /checkout?amount=AMOUNT to initiate a payment.
 
