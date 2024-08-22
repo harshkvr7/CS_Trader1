@@ -25,13 +25,12 @@
             //creates new orderId everytime
             $.ajax(settings).done(function (response) {
                 orderId = response.orderId;
-                
                 $("button").show();
             });
 
             document.getElementById('rzp-button1').onclick = function (e) {
                 var options = {
-                    "key": "", // Enter the Key ID generated from the Dashboard
+                    "key": process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
                     "amount": "<%= amountejs %>", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                     "currency": "INR",
                     "name": "CS Trader",

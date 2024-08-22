@@ -14,7 +14,6 @@ import SteamTotp from "steam-totp";
 import http from "http";
 import { Server } from "socket.io";
 
-// Load environment variables
 env.config();
 
 const bot = new SteamBot({
