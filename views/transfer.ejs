@@ -1,15 +1,14 @@
 <%- include("header.ejs") %>
 
-<div class="transfer-container">
-    <div class="transfer-message">
-        <%= message %>
-    </div>
-    <% if(locals.tradelink){ %>
-        <div class="transfer-link">
-            <a href=<%= tradelink %>>
-                Open trade offer
-            </a>
+    <div class="transfer-container">
+        <div class="transfer-message">
+            <%= message %>
         </div>
-    <% } %>
-</div>
-
+        <% if(locals.tradelink){ %>
+            <div class="transfer-link">
+                <a href=<%=tradelink %>>
+                    Open trade offer
+                </a>
+            </div>
+            <% } %>
+    </div>

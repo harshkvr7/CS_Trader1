@@ -1,6 +1,6 @@
-import SteamUser from 'steam-user';
-import SteamCommunity from 'steamcommunity';
-import TradeOfferManager from 'steam-tradeoffer-manager';
+import SteamUser from "steam-user";
+import SteamCommunity from "steamcommunity";
+import TradeOfferManager from "steam-tradeoffer-manager";
 
 class SteamBot {
 	constructor(logOnOptions) {
@@ -9,7 +9,7 @@ class SteamBot {
 		this.manager = new TradeOfferManager({
 			steam: this.client,
 			community: this.community,
-			language: 'en',
+			language: "en",
 		});
 
 		this.logOn(logOnOptions);
@@ -18,15 +18,13 @@ class SteamBot {
 	logOn(logOnOptions) {
 		this.client.logOn(logOnOptions);
 
-		this.client.on('loggedOn', () => {
-			console.log('Logged into Steam');
-
+		this.client.on("loggedOn", () => {
+			console.log("Logged into Steam");
 			this.client.setPersona(SteamUser.EPersonaState.Online);
 		});
 
-		this.client.on('webSession', (sessionid, cookies) => {
+		this.client.on("webSession", (sessionid, cookies) => {
 			this.manager.setCookies(cookies);
-
 			this.community.setCookies(cookies);
 			this.community.startConfirmationChecker(1000, process.env.STEAM_IDENTITY_SECRET);
 		});
@@ -34,36 +32,32 @@ class SteamBot {
 
 	sendWithdrawTrade(partnerId, item, callback) {
 		const offer = this.manager.createOffer(partnerId);
-	
 		offer.addMyItem(item);
-		offer.setMessage('Withdraw item from the website!');
-	
+		offer.setMessage("Withdraw item from the website!");
 		offer.send((err, status) => {
 			if (err) {
 				console.log("Error sending offer:", err);
-				callback(err, null, null); 
+				callback(err, null);
 			} else {
 				console.log("Trade offer sent");
 				const tradelink = `https://steamcommunity.com/tradeoffer/${offer.id}`;
-				callback(null, tradelink, offer);
+				callback(null, tradelink);
 			}
 		});
 	}
-	
-	sendDepositTrade(partnerId, item, callback){
+
+	sendDepositTrade(partnerId, item, callback) {
 		const offer = this.manager.createOffer(partnerId);
-
 		offer.addTheirItem(item);
-		offer.setMessage('Deposit item on the website!');
-
+		offer.setMessage("Deposit item on the website!");
 		offer.send((err, status) => {
 			if (err) {
 				console.log("Error sending offer:", err);
-				callback(err, null); 
+				callback(err, null);
 			} else {
 				console.log("Trade offer sent");
 				const tradelink = `https://steamcommunity.com/tradeoffer/${offer.id}`;
-				callback(null, tradelink); 
+				callback(null, tradelink);
 			}
 		});
 	}
@@ -72,7 +66,7 @@ class SteamBot {
 		return new Promise((resolve, reject) => {
 			this.manager.getInventoryContents(730, 2, true, (err, inv) => {
 				if (err) {
-					reject(err); 
+					reject(err);
 				} else {
 					resolve(inv);
 				}
@@ -82,11 +76,11 @@ class SteamBot {
 
 	getPartnerInventory(partnerId) {
 		return new Promise((resolve, reject) => {
-			this.manager.getUserInventoryContents(partnerId , 730, 2, true, (err, inv) => {
+			this.manager.getUserInventoryContents(partnerId, 730, 2, true, (err, inv) => {
 				if (err) {
 					reject(err);
 				} else {
-					resolve(inv); 
+					resolve(inv);
 				}
 			});
 		});
@@ -94,7 +88,3 @@ class SteamBot {
 }
 
 export default SteamBot;
-
-
-
-
